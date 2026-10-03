@@ -4,13 +4,13 @@ class MyCircularQueue:
         self.queue = [None]*k
         self.head = 0
         self.size = 0
-        self.rear = 0
+        self.rear = -1
         self.k = k
 
     def enQueue(self, value: int) -> bool:
         if self.isFull():
             return False
-        self.rear = (self.head + self.size)%self.k
+        self.rear = (self.rear + 1)%self.k
         self.queue[self.rear] = value
         self.size += 1
         return True
@@ -19,9 +19,8 @@ class MyCircularQueue:
         if self.isEmpty():
             return False
         self.queue[self.head] = None
-        self.head += 1
+        self.head = (self.head + 1)%self.k
         self.size -= 1
-        self.head %= self.k
         return True
         
 
@@ -48,6 +47,7 @@ class MyCircularQueue:
             return True
         return False
 
+# an array is better suited for this circular queue than a linked list or a dll because the size of the queue is prefixed and as a result we do no need to make new nodes and waste memory on pointers. the elements also sit next to each other in memory which suits the cpu cache and the empty slots can be reused since it is circular. A ll would be better suited when u have to resize the queue / size isnt mentioned 
 
 # Your MyCircularQueue object will be instantiated and called as such:
 # obj = MyCircularQueue(k)
